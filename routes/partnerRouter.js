@@ -6,21 +6,12 @@ const partnerRouter = express.Router();
 partnerRouter.route('/')
 .get((req, res, next) => {
     Partner.find()
-    .then(partners => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(partners);
-    })
+    .then(partners => res.status(200).json(partners))
     .catch(err => next(err));
 })
 .post((req, res, next) => {
     Partner.create(req.body)
-    .then(partner => {
-        console.log('partner Created ', partner);
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(partner);
-    })
+    .then(partner => res.status(200).json(partner))
     .catch(err => next(err));
 })
 .put((req, res) => {
@@ -29,22 +20,14 @@ partnerRouter.route('/')
 })
 .delete((req, res, next) => {
     Partner.deleteMany()
-    .then(response => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(response);
-    })
+    .then(partners => res.status(200).json(partners))
     .catch(err => next(err));
 });
 
 partnerRouter.route('/:partnerId')
 .get((req, res, next) => {
     Partner.findById(req.params.partnerId)
-    .then(partner => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(partner);
-    })
+    .then(partner => res.status(200).json(partner))
     .catch(err => next(err));
 })
 .post((req, res) => {
@@ -55,20 +38,12 @@ partnerRouter.route('/:partnerId')
     Partner.findByIdAndUpdate(req.params.partnerId, {
         $set: req.body
     }, { new: true })
-    .then(partner => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(partner);
-    })
+    .then(partner => res.status(200).json(partner))
     .catch(err => next(err));
 })
 .delete((req, res, next) => {
     Partner.findByIdAndDelete(req.params.partnerId)
-    .then(response => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json(response);
-    })
+    .then(partner => res.status(200).json(partner))
     .catch(err => next(err));
 });
 
