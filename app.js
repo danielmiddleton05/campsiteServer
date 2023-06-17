@@ -75,8 +75,6 @@ function auth(req, res, next) {
     }
 }
 
-app.use(auth);
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -107,6 +105,8 @@ function auth(req, res, next) {
         }
     }
 }
+
+app.use(auth);
 
 app.use('/campsites', campsiteRouter);
 app.use('/promotions', promotionRouter);
