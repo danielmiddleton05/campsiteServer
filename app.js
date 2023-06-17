@@ -1,7 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
@@ -33,7 +32,6 @@ connect.then(() => console.log('Connected correctly to server'),
     err => console.log(err)
 );
 
-app.use(cookieParser('12345-67890-09876-54321'));
 
 app.use(session({
     name: 'session-id',
@@ -44,18 +42,6 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
-function auth(req, res, next) {
-    console.log(req.user);
-
-    if (!req.user) {
-        const err = new Error('You are not authenticated!');                    
-        err.status = 401;
-        return next(err);
-    } else {
-        return next();
-    }
-}
 
 function auth(req, res, next) {
     console.log(req.session);
@@ -122,8 +108,6 @@ function auth(req, res, next) {
         }
     }
 }
-
-app.use(auth);
 
 app.use('/campsites', campsiteRouter);
 app.use('/promotions', promotionRouter);
